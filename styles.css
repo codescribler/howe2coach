@@ -949,6 +949,204 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ================================================================
+   BOOKING MODAL
+   ================================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--dark);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px 36px;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all var(--transition);
+}
+.modal__close:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modal__header {
+  margin-bottom: 28px;
+}
+
+.modal__title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.modal__subtitle {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--gray);
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal__row {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 14px;
+}
+
+.modal__field label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+}
+
+.modal__optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--gray);
+  font-size: 0.75rem;
+}
+
+.modal__field input,
+.modal__field select,
+.modal__field textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.modal__field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.modal__field select option {
+  background: var(--dark);
+  color: var(--white);
+}
+
+.modal__field input::placeholder,
+.modal__field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.modal__field input:focus,
+.modal__field select:focus,
+.modal__field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200, 168, 78, 0.15);
+}
+
+.modal__field textarea {
+  resize: vertical;
+  min-height: 56px;
+}
+
+/* Validation */
+.modal__field input:invalid.touched,
+.modal__field select:invalid.touched {
+  border-color: #e44;
+}
+
+.modal__submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.modal__trust {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--gray);
+  margin-top: 2px;
+}
+
+/* Success state */
+.modal__success {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+.modal__success.show {
+  display: block;
+}
+.modal__success .modal__title {
+  margin-top: 16px;
+}
+.modal__success .modal__subtitle {
+  margin-bottom: 28px;
+}
+.modal__success-icon {
+  animation: successPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes successPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Hide form when success shows */
+.modal__form.hidden { display: none; }
+.modal__header.hidden { display: none; }
+
+/* ================================================================
    RESPONSIVE
    ================================================================ */
 @media (max-width: 1024px) {
@@ -1002,6 +1200,9 @@ a { text-decoration: none; color: inherit; }
 
   .testimonial { padding: 32px 24px; }
   .testimonial__quote { font-size: 1.05rem; }
+
+  .modal { padding: 32px 24px; }
+  .modal__row { grid-template-columns: 1fr 90px; }
 }
 
 @media (max-width: 480px) {

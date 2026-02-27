@@ -25,7 +25,7 @@
         <a href="#app" class="header__link">The App</a>
         <a href="#final-cta" class="header__link">Contact</a>
       </nav>
-      <a href="#final-cta" class="btn btn--gold header__cta">Book a Session</a>
+      <a href="#" class="btn btn--gold header__cta js-open-booking">Book a Session</a>
       <button class="header__burger" id="burger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -39,7 +39,7 @@
       <a href="#how-it-works" class="mobile-nav__link">1-to-1 Training</a>
       <a href="#app" class="mobile-nav__link">The App</a>
       <a href="#final-cta" class="mobile-nav__link">Contact</a>
-      <a href="#final-cta" class="btn btn--gold mobile-nav__cta">Book a Session</a>
+      <a href="#" class="btn btn--gold mobile-nav__cta js-open-booking">Book a Session</a>
     </nav>
   </div>
 
@@ -61,7 +61,7 @@
       </h1>
       <p class="hero__sub">Rene Howe spent 15 years as a professional footballer. Now he works directly with young players aged 7–16 to develop the skills, confidence, and mindset that team training alone can't give them.</p>
       <div class="hero__actions">
-        <a href="#final-cta" class="btn btn--gold btn--lg">Book a 1-to-1 Session</a>
+        <a href="#" class="btn btn--gold btn--lg js-open-booking">Book a 1-to-1 Session</a>
         <a href="#how-it-works" class="btn btn--outline btn--lg">See How It Works</a>
       </div>
     </div>
@@ -169,7 +169,7 @@
       </div>
 
       <div class="steps__cta reveal">
-        <a href="#final-cta" class="btn btn--gold btn--lg">Book a Session</a>
+        <a href="#" class="btn btn--gold btn--lg js-open-booking">Book a Session</a>
       </div>
     </div>
   </section>
@@ -335,7 +335,7 @@
       <div class="final-cta__inner reveal">
         <h2 class="final-cta__title">Give Them the Edge That Team Training <span class="gold">Can't</span></h2>
         <p class="final-cta__text">One-to-one sessions with a professional who's been there, done it, and knows exactly how to develop young players. Book your child's first session today.</p>
-        <a href="#" class="btn btn--gold btn--xl">Book a 1-to-1 Session</a>
+        <a href="#" class="btn btn--gold btn--xl js-open-booking">Book a 1-to-1 Session</a>
       </div>
     </div>
   </section>
@@ -375,6 +375,73 @@
       </div>
     </div>
   </footer>
+
+  <!-- ========== BOOKING MODAL ========== -->
+  <div class="modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal__close" id="modalClose" aria-label="Close booking form">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="modal__header">
+        <h2 class="modal__title" id="modalTitle">Book a 1-to-1 Session</h2>
+        <p class="modal__subtitle">No commitment. Just tell us a little about your child and we'll be in touch to find a time that works.</p>
+      </div>
+
+      <form class="modal__form" id="bookingForm" novalidate>
+        <div class="modal__field">
+          <label for="parentName">Your name</label>
+          <input type="text" id="parentName" name="parentName" placeholder="e.g. Sarah Jones" required autocomplete="name">
+        </div>
+
+        <div class="modal__field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" placeholder="e.g. 07700 900000" required autocomplete="tel">
+        </div>
+
+        <div class="modal__row">
+          <div class="modal__field">
+            <label for="childName">Child's first name</label>
+            <input type="text" id="childName" name="childName" placeholder="e.g. Leo" required>
+          </div>
+          <div class="modal__field">
+            <label for="childAge">Age</label>
+            <select id="childAge" name="childAge" required>
+              <option value="" disabled selected>Select</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal__field">
+          <label for="comments">Anything we should know? <span class="modal__optional">Optional</span></label>
+          <textarea id="comments" name="comments" rows="2" placeholder="e.g. position, goals, availability..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--gold btn--lg modal__submit">Book My Child's Session</button>
+        <p class="modal__trust">We'll get back to you within 24 hours. No spam, ever.</p>
+      </form>
+
+      <!-- Success state -->
+      <div class="modal__success" id="modalSuccess">
+        <div class="modal__success-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c8a84e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2 class="modal__title">You're All Set!</h2>
+        <p class="modal__subtitle">Thanks for your enquiry. Rene will be in touch within 24 hours to arrange your child's first session.</p>
+        <button type="button" class="btn btn--outline btn--lg" id="modalDone">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

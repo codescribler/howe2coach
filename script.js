@@ -351,4 +351,90 @@
     }
   });
 
+  // ---- Booking Modal ----
+  var modal = document.getElementById('bookingModal');
+  var modalForm = document.getElementById('bookingForm');
+  var modalSuccess = document.getElementById('modalSuccess');
+  var modalCloseBtn = document.getElementById('modalClose');
+  var modalDoneBtn = document.getElementById('modalDone');
+  var modalHeader = modal.querySelector('.modal__header');
+  var openBtns = document.querySelectorAll('.js-open-booking');
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Focus first input after animation
+    setTimeout(function () {
+      var first = modalForm.querySelector('input');
+      if (first) first.focus();
+    }, 350);
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function resetModal() {
+    modalForm.reset();
+    modalForm.classList.remove('hidden');
+    modalHeader.classList.remove('hidden');
+    modalSuccess.classList.remove('show');
+    // Remove touched class from all fields
+    modalForm.querySelectorAll('.touched').forEach(function (el) {
+      el.classList.remove('touched');
+    });
+  }
+
+  openBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      resetModal();
+      openModal(e);
+    });
+  });
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalDoneBtn.addEventListener('click', function () {
+    closeModal();
+    setTimeout(resetModal, 400);
+  });
+
+  // Close on overlay click (not modal body)
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  });
+
+  // Mark fields as touched on blur for validation styling
+  modalForm.querySelectorAll('input, select').forEach(function (field) {
+    field.addEventListener('blur', function () {
+      this.classList.add('touched');
+    });
+  });
+
+  // Form submission (demo — shows success state)
+  modalForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Mark all required fields as touched to trigger validation styles
+    modalForm.querySelectorAll('[required]').forEach(function (f) {
+      f.classList.add('touched');
+    });
+
+    // Check validity
+    if (!modalForm.checkValidity()) return;
+
+    // Show success state
+    modalForm.classList.add('hidden');
+    modalHeader.classList.add('hidden');
+    modalSuccess.classList.add('show');
+  });
+
 })();
